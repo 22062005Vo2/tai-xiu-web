@@ -1,56 +1,57 @@
 <!DOCTYPE html>
 <html lang="vi">
 <head>
-  <meta charset="UTF-8">
-  <title>Chơi Tài Xỉu</title>
-  <style>
-    body { font-family: Arial; text-align: center; padding: 40px; }
-    button { padding: 10px 20px; font-size: 18px; margin: 10px; }
-    #dice img { width: 60px; margin: 5px; }
-  </style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Tài Xỉu  - Hot789 Style</title>
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <h1>Game Tài Xỉu Online</h1>
-  <p>Số coin: <span id="coin">1000</span></p>
-  <p>
-    <button onclick="play('tai')">Đặt Tài</button>
-    <button onclick="play('xiu')">Đặt Xỉu</button>
-  </p>
-  <div id="dice"></div>
-  <p id="result"></p>
+  <div class="container">
+    <aside class="sidebar">
+      <div class="user-info">
+        <img src="https://i.imgur.com/FQZ7N6v.png" alt="avatar" class="avatar">
+        <h2>User Demo</h2>
+        <p>Số dư: <span id="balance">10000</span>₫</p>
+      </div>
+      <nav>
+        <button onclick="showSection('taixiu')">🎲 Tài Xỉu</button>
+        <button onclick="showSection('quayhu')">🎰 Quay Hũ</button>
+        <button onclick="resetGame()">🔄 Reset</button>
+      </nav>
+    </aside>
 
-  <script>
-    let coin = 1000;
+    <main class="main-content">
+      <section id="taixiu" class="game-section active">
+        <h1>🎲 Game Tài Xỉu</h1>
+        <div class="dice-container" id="dice"></div>
+        <div class="controls">
+          <input type="number" id="bet-amount" placeholder="Nhập tiền cược" />
+          <button onclick="play('tai')">Cược Tài</button>
+          <button onclick="play('xiu')">Cược Xỉu</button>
+        </div>
+        <div id="result"></div>
+        <div>
+          <h3>Lịch sử:</h3>
+          <ul id="history"></ul>
+        </div>
+      </section>
 
-    function play(bet) {
-      if (coin < 100) {
-        alert("Bạn không đủ coin để chơi.");
-        return;
-      }
+      <section id="quayhu" class="game-section">
+        <h1>🎰 Game Quay Hũ</h1>
+        <div class="slot">
+          <span id="slot1">🍒</span>
+          <span id="slot2">🍋</span>
+          <span id="slot3">🍉</span>
+        </div>
+        <button onclick="quayHu()">Quay</button>
+        <div id="quay-result"></div>
+      </section>
+    </main>
+  </div>
 
-      const dice = [
-        Math.floor(Math.random() * 6) + 1,
-        Math.floor(Math.random() * 6) + 1,
-        Math.floor(Math.random() * 6) + 1
-      ];
-      const total = dice[0] + dice[1] + dice[2];
-      const outcome = total >= 11 ? 'tai' : 'xiu';
-
-      const diceHtml = dice.map(num => `<img src="https://upload.wikimedia.org/wikipedia/commons/${num}.svg" alt="${num}">`).join('');
-      document.getElementById('dice').innerHTML = diceHtml;
-
-      let msg = `Kết quả: ${total} (${outcome.toUpperCase()})<br>`;
-      if (bet === outcome) {
-        coin += 100;
-        msg += "🎉 Bạn thắng +100 coin!";
-      } else {
-        coin -= 100;
-        msg += "💸 Bạn thua -100 coin!";
-      }
-
-      document.getElementById("coin").textContent = coin;
-      document.getElementById("result").innerHTML = msg;
-    }
-  </script>
+  <script src="script.js"></script>
 </body>
 </html>
+
+
