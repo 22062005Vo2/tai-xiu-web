@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <title>Chơi Tài Xỉu</title>
+  <style>
+    body { font-family: Arial; text-align: center; padding: 40px; }
+    button { padding: 10px 20px; font-size: 18px; margin: 10px; }
+    #dice img { width: 60px; margin: 5px; }
+  </style>
+</head>
+<body>
+  <h1>Game Tài Xỉu Online</h1>
+  <p>Số coin: <span id="coin">1000</span></p>
+  <p>
+    <button onclick="play('tai')">Đặt Tài</button>
+    <button onclick="play('xiu')">Đặt Xỉu</button>
+  </p>
+  <div id="dice"></div>
+  <p id="result"></p>
+
+  <script>
+    let coin = 1000;
+
+    function play(bet) {
+      if (coin < 100) {
+        alert("Bạn không đủ coin để chơi.");
+        return;
+      }
+
+      const dice = [
+        Math.floor(Math.random() * 6) + 1,
+        Math.floor(Math.random() * 6) + 1,
+        Math.floor(Math.random() * 6) + 1
+      ];
+      const total = dice[0] + dice[1] + dice[2];
+      const outcome = total >= 11 ? 'tai' : 'xiu';
+
+      const diceHtml = dice.map(num => `<img src="https://upload.wikimedia.org/wikipedia/commons/${num}.svg" alt="${num}">`).join('');
+      document.getElementById('dice').innerHTML = diceHtml;
+
+      let msg = `Kết quả: ${total} (${outcome.toUpperCase()})<br>`;
+      if (bet === outcome) {
+        coin += 100;
+        msg += "🎉 Bạn thắng +100 coin!";
+      } else {
+        coin -= 100;
+        msg += "💸 Bạn thua -100 coin!";
+      }
+
+      document.getElementById("coin").textContent = coin;
+      document.getElementById("result").innerHTML = msg;
+    }
+  </script>
+</body>
+</html>
